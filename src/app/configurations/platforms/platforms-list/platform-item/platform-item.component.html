@@ -1,4 +1,4 @@
-<a [routerLink]="['/platforms', platform.id]" routerLinkActive="active" class="list-group-item clearfix">
+<a [routerLink]="['/platforms', platform.id]" routerLinkActive="active" class="list-group-item clearfix" (click)="onEditItem(platform.id)">
     <div class="pull-left">
         <h4 class="list-group-item-heading">{{ platform.name }}</h4>
         <p class="list-group-item-text">{{ platform.description }}</p>

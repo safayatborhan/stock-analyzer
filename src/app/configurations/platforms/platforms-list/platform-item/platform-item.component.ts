@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Platform } from '../../platforms.model';
+import { PlatformService } from '../../platforms.service';
 
 @Component({
   selector: 'app-platform-item',
@@ -11,4 +12,10 @@ import { Platform } from '../../platforms.model';
 })
 export class PlatformItemComponent {
   @Input() platform!: Platform;
+
+  constructor(private platformService: PlatformService) { }
+
+  onEditItem(id: number) {
+    this.platformService.startedEditing.next(id);
+  }
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Platform } from '../platforms.model';
 import { ActivatedRoute } from '@angular/router';
 import { PlatformService } from '../platforms.service';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-platform-upsert',
@@ -11,7 +12,9 @@ import { FormsModule, NgForm } from '@angular/forms';
   templateUrl: './platform-upsert.component.html',
   styleUrl: './platform-upsert.component.css'
 })
-export class PlatformUpsertComponent implements OnInit {
+export class PlatformUpsertComponent implements OnInit, OnDestroy {
+
+  subscription!: Subscription;
   platform!: Platform | undefined;
   id!: number;
   editMode = false;
@@ -20,9 +23,19 @@ export class PlatformUpsertComponent implements OnInit {
   constructor(private route: ActivatedRoute, private platformService: PlatformService) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.id = +params['id'];
-      this.editMode = params['id'] != null;
+    // this.route.params.subscribe(params => {
+    //   this.id = +params['id'];
+    //   this.editMode = params['id'] != null;
+    //   this.platform = this.platformService.getPlatform(this.id);
+    //   this.platformForm.setValue({
+    //     name: this.platform?.name,
+    //     description: this.platform?.description
+    //   });
+    // });
+
+    this.subscription = this.platformService.startedEditing.subscribe(id => {
+      this.id = id;
+      this.editMode = true;
       this.platform = this.platformService.getPlatform(this.id);
       this.platformForm.setValue({
         name: this.platform?.name,
@@ -47,5 +60,9 @@ export class PlatformUpsertComponent implements OnInit {
     form.reset();
     this.editMode = false;
   } 
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
   
 }
