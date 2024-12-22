@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-xs-12">
+        <form>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" class="form-control" [value]="platform?.name" #nameInput>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <label for="description">Description</label>
+                    <input type="text" id="description" class="form-control" [value]="platform?.description" #descriptionInput>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-success" type="button" (click)="onSavePlatform()">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>        
+</div>

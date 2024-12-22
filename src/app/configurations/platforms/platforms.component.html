@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-xs-12">
+        <button [routerLink]="['/platforms/new']" class="btn btn-primary">New Platform</button>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-5">
+        <app-platforms-list></app-platforms-list>
+    </div>
+    <div class="col-md-7">
+        <router-outlet></router-outlet>
+    </div>
+</div>
