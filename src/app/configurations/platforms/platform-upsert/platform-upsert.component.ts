@@ -1,12 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Platform } from '../platforms.model';
 import { ActivatedRoute } from '@angular/router';
 import { PlatformService } from '../platforms.service';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-platform-upsert',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './platform-upsert.component.html',
   styleUrl: './platform-upsert.component.css'
 })
@@ -14,6 +15,7 @@ export class PlatformUpsertComponent implements OnInit {
   platform!: Platform | undefined;
   id!: number;
   editMode = false;
+  @ViewChild('platformForm', { static: false }) platformForm!: NgForm;
   
   constructor(private route: ActivatedRoute, private platformService: PlatformService) { }
 
@@ -22,25 +24,28 @@ export class PlatformUpsertComponent implements OnInit {
       this.id = +params['id'];
       this.editMode = params['id'] != null;
       this.platform = this.platformService.getPlatform(this.id);
+      this.platformForm.setValue({
+        name: this.platform?.name,
+        description: this.platform?.description
+      });
     });
   }
 
-  @ViewChild('nameInput', { static: false }) nameInputRef!: ElementRef;
-  @ViewChild('descriptionInput', { static: false }) descriptionInputRef!: ElementRef;
-
-  onSavePlatform() {
-    var name = this.nameInputRef.nativeElement.value;
-    var description = this.descriptionInputRef.nativeElement.value;
+  onSavePlatform(form: NgForm) {
+    const formValue = form.value; 
     
     if (this.editMode) 
     {
-      var platform = new Platform(this.id, name, description);
+      var platform = new Platform(this.id, formValue.name, formValue.description);
       this.platformService.updatePlatform(platform);
     } 
     else 
     {
-      this.platformService.addPlatform(name, description);
+      this.platformService.addPlatform(formValue.name, formValue.description);
     }
+
+    form.reset();
+    this.editMode = false;
   } 
   
 }
