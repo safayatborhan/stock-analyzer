@@ -1,6 +1,8 @@
 import { Subject } from "rxjs";
 import { Platform } from "./platforms.model";
+import { Injectable } from "@angular/core";
 
+@Injectable({providedIn: 'root'})
 export class PlatformService {
     private platforms: Platform[] = [
         new Platform(1, 'FSMOne', 'Singapore based broker'),
