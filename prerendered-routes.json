@@ -1,0 +1,6 @@
+{
+  "routes": [
+    "/platforms",
+    "/platforms/new"
+  ]
+}
