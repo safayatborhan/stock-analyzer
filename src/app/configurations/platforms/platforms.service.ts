@@ -13,7 +13,7 @@ export class PlatformService {
     platformsChanged = new Subject<Platform[]>();
 
     addPlatform(name: string, description: string) {
-        var lastId = this.platforms[this.platforms.length - 1].id;
+        var lastId = this.platforms.length === 0 ? 1 : this.platforms[this.platforms.length - 1].id;
         var platform = new Platform(++lastId, name, description);
         this.platforms.push(platform);
         this.platformsChanged.next(this.platforms.slice());

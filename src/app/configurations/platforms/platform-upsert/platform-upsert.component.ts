@@ -51,6 +51,16 @@ export class PlatformUpsertComponent implements OnInit {
 
     form.reset();
     this.editMode = false;
+    this.router.navigate(['platforms/new']);
+  }
+
+  onDelete() {
+    this.platformService.deletePlatform(this.id);
+    this.ngForm.setValue({        
+      name: '',
+      description: ''
+    });
+    this.editMode = false;
     this.router.navigate(['/new']);
   }
   
