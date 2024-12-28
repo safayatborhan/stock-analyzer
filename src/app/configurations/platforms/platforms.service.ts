@@ -11,7 +11,6 @@ export class PlatformService {
     ];
 
     platformsChanged = new Subject<Platform[]>();
-    startedEditing = new Subject<number>();
 
     addPlatform(name: string, description: string) {
         var lastId = this.platforms[this.platforms.length - 1].id;
